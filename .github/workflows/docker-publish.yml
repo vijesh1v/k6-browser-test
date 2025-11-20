@@ -11,8 +11,4 @@ jobs:
         run: sudo apt-get install k6 -y
       - name: Run k6 tests
         run: k6 run browser-test.js
-      - name: Upload k6 results
-        uses: actions/upload-artifact@v3
-        with:
-          name: screenshots
-          path: screenshots
+    
