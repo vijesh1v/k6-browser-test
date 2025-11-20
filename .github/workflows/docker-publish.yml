@@ -5,16 +5,22 @@ on: [push, pull_request]
 jobs:
   k6-test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install k6
-        run: sudo apt-get update && sudo apt-get install -y k6
+      - name: Setup k6 with browser support
+        uses: grafana/setup-k6-action@v1
+        with:
+          browser: true
 
       - name: Run k6 tests
-        run: k6 run browser-test.js
+        uses: grafana/run-k6-action@v1
+        with:
+          path: |
+            browser-test.js
 
-      - name: Upload k6 results
+      - name: Upload k6 screenshots
         uses: actions/upload-artifact@v4
         with:
           name: screenshots
