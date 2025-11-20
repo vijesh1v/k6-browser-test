@@ -1,4 +1,4 @@
-# xk6 Browser Testing Framework
+# k6 Browser Testing Framework
 A lightweight browser testing setup using k6 with browser automation. 
 This project helps testers automate performance and UI workflows using Chromium.
 for documentations link https://grafana.com/docs/k6/latest/using-k6-browser/

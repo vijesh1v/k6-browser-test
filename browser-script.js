@@ -27,27 +27,38 @@ export function setup() {
   }
 }
 
-export default async function() {
-  let checkData;
+export default async function () {
   const page = await browser.newPage();
 
   try {
     await page.goto(BASE_URL);
 
-    checkData = await page.locator("h1").textContent();
+    // check 1
+    let checkData = await page.locator("h1").textContent();
     check(page, {
       header: checkData === "Looking to break out of your pizza routine?",
     });
 
+    // click button
     await page.locator('//button[. = "Pizza, Please!"]').click();
     await page.waitForTimeout(500);
 
-    await page.screenshot({ path: "screenshot.png" });
+    // 📸 ensure screenshot directory exists
+    try {
+      await browser.ensureDir("screenshots");
+    } catch (_) {
+      // ignore if folder already exists
+    }
 
+    // 📸 take screenshot into folder
+    await page.screenshot({ path: "screenshots/home.png" });
+
+    // check 2
     checkData = await page.locator("div#recommendations").textContent();
     check(page, {
       recommendation: checkData !== "",
     });
+
   } catch (error) {
     fail(`Browser iteration failed: ${error.message}`);
   } finally {
@@ -56,4 +67,3 @@ export default async function() {
 
   sleep(1);
 }
-
