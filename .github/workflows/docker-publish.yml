@@ -1,0 +1,18 @@
+name: Run k6 tests
+
+on: [push, pull_request]
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install k6
+        run: sudo apt-get install k6 -y
+      - name: Run k6 tests
+        run: k6 run browser-test.js
+      - name: Upload k6 results
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: screenshots
